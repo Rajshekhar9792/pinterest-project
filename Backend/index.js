@@ -6,7 +6,6 @@ import cookieParser from 'cookie-parser';
 import cloudinary from "cloudinary";
 import userRoutes from "./Routes/userRoutes.js";
 import pinRoutes from "./Routes/pinRoutes.js";
-import path from "path";
 
 dotenv.config();
 
@@ -17,7 +16,8 @@ cloudinary.v2.config({
   });
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
+// const BASE_URL = process.env.BASE_URL;
 
 //middlare
 app.use(express.json());
@@ -35,15 +35,8 @@ app.get('/about', (req, res) => {
     res.send("this is my about page");
 });
 
-const __dirname = path.resolve();
-
-app.use(express.static(path.join(__dirname, "/frontend/dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-});
-
 app.listen(port, ()=>{
     console.log(`server is runing on http://localhost:${port}`);
+    // console.log(`server is runing on ${BASE_URL}`)
     connectDatabase();
 });
