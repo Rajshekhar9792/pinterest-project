@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import cloudinary from "cloudinary";
 import userRoutes from "./Routes/userRoutes.js";
 import pinRoutes from "./Routes/pinRoutes.js";
+import path from 'path';
 
 dotenv.config();
 
@@ -33,6 +34,11 @@ app.use("/api/pin", pinRoutes);
 
 app.get('/about', (req, res) => {
     res.send("this is my about page");
+});
+
+app.get('/', (req, res) => {
+    app.use(express.static(path.resolve(__dirname, "frontend", "dist")));
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
 });
 
 app.listen(port, ()=>{
